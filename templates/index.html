@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Geolocalización en Tiempo Real</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        #map { 
+            height: 400px; 
+            width: 80%;
+            margin: 20px auto;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+        body {
+            font-family: sans-serif;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>📍 Rastreo en Tiempo Real</h1>
+    <p id="coordenadas">Esperando ubicación...</p>
+    <div id="map"></div>
+
+    <script>
+        let map = L.map('map').setView([0, 0], 2);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        let marcador = null;
+
+        function actualizarMapa(lat, lon) {
+            if (marcador) {
+                marcador.setLatLng([lat, lon]);
+            } else {
+                marcador = L.marker([lat, lon]).addTo(map);
+            }
+            map.setView([lat, lon], 16);
+        }
+
+        setInterval(() => {
+            fetch("/ultima_ubicacion")
+                .then(res => res.json())
+                .then(data => {
+                    const lat = data.latitud;
+                    const lon = data.longitud;
+                    if (lat && lon) {
+                        document.getElementById("coordenadas").innerText = 
+                            `Latitud: ${lat}, Longitud: ${lon}`;
+                        actualizarMapa(lat, lon);
+                    }
+                });
+        }, 3000);
+    </script>
+</body>
+</html>
