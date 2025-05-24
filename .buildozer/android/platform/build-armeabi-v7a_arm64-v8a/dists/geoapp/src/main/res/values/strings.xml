@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GeoApp</string>
-    <string name="private_version">7f9cf7af44a7f855cfb2855245717cb7cd216365</string>
+    <string name="private_version">df60fb06e70d2641cb60dca58b5ed80776a4e2bd</string>
     <string name="presplash_color">#000000</string>
     <string name="urlScheme">kivy</string>
 </resources>

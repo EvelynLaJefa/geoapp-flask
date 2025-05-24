@@ -24,5 +24,5 @@ def ultima_ubicacion():
     return jsonify(ubicacion_actual)
 
 if __name__ == '__main__':
-    port = init(os.environ.get('PORT',5000))
+    port = int(os.environ.get('PORT',5000))
     app.run(host='0.0.0.0', port=port)

@@ -28,13 +28,13 @@ class GeoApp(App):
     def enviar_a_servidor(self, lat, lon):
         try:
             respuesta = requests.post(
-                "https://a503-80-224-221-206.ngrok-free.app ->http://localhost:5000",  # ← luego lo cambiamos por una URL real
+                "https://geoapp-flask.onrender.com/recibir_ubicacion",  # ✅ URL de Render
                 json={"latitud": lat, "longitud": lon},
                 timeout=10
             )
             print("Respuesta del servidor:", respuesta.text)
         except Exception as e:
             print("Error de conexión:", e)
+
 if __name__ == '__main__':
     GeoApp().run()
-

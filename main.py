@@ -17,23 +17,24 @@ class GeoApp(App):
             gps.configure(on_location=self.on_location)
             gps.start()
         except Exception as e:
-            print("Error al activar el GPS:", e)
+            print("Error GPS:", e)
 
     def on_location(self, **kwargs):
         lat = kwargs.get('lat')
         lon = kwargs.get('lon')
-        print(f"📍 Coordenadas reales: {lat}, {lon}")
+        print(f"Coordenadas reales: {lat}, {lon}")
         self.enviar_a_servidor(lat, lon)
 
     def enviar_a_servidor(self, lat, lon):
         try:
-            # ⚠️ Asegúrate de actualizar este enlace cada vez que cambie en Ngrok
-            url = "https://16e5-80-224-221-206.ngrok-free.app/recibir_ubicacion"
-            datos = {"latitud": lat, "longitud": lon}
-            respuesta = requests.post(url, json=datos, timeout=10)
-            print("✅ Respuesta del servidor:", respuesta.text)
+            respuesta = requests.post(
+                "https://geoapp-flask.onrender.com/recibir_ubicacion",  # ✅ URL de Render
+                json={"latitud": lat, "longitud": lon},
+                timeout=10
+            )
+            print("Respuesta del servidor:", respuesta.text)
         except Exception as e:
-            print("❌ Error al enviar al servidor:", e)
+            print("Error de conexión:", e)
 
 if __name__ == '__main__':
     GeoApp().run()
