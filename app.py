@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+import os
 
 app = Flask(__name__)
 
@@ -23,4 +24,5 @@ def ultima_ubicacion():
     return jsonify(ubicacion_actual)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = init(os.environ.get('PORT',5000))
+    app.run(host='0.0.0.0', port=port)
